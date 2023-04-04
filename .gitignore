@@ -2,3 +2,6 @@
 cov_profile.lcov
 cov_profile/
 cov_report/
+
+# logs
+logs/

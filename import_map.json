@@ -1,10 +1,11 @@
 {
   "imports": {
     "@zod/": "https://deno.land/x/zod@v3.21.4/",
-    "@std/": "https://deno.land/std@0.180.0/",
+    "@std/": "https://deno.land/std@0.182.0/",
     "@app/": "./src/application/",
     "@domain/": "./src/domain/",
     "@infra/": "./src/infrastructure/",
+    "@utils/": "./src/utilities/",
     "@tests/": "./tests/"
   }
 }
