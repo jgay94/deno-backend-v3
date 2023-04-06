@@ -2,6 +2,7 @@ import { CustomError } from "./typings.d.ts";
 
 /**
  * Base class for custom errors with a name, message, and an optional cause.
+ * 
  * @template T - The string literal type representing the error name.
  * @template C - The type representing the error cause, defaults to unknown.
  * @extends Error

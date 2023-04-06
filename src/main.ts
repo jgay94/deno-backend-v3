@@ -1,12 +1,13 @@
 import { log, setupLogger } from "@utils/logger/mod.ts";
-import { BaseError } from "@utils/errors/mod.ts";
+import { BaseError, isCustomError } from "@utils/errors/mod.ts";
 
-// Import BaseError and create a custom error class that extends it
-class MyCustomError extends BaseError<"MyCustomError"> {
-  constructor(message: string, cause?: unknown) {
-    super({ name: "MyCustomError", message, cause });
-  }
-}
+type MyCustomErrorName =
+  | "MyCustomError"
+  | "MyCustomError2"
+  | "MyCustomError3";
+
+// // Import BaseError and create a custom error class that extends it
+class MyCustomError extends BaseError<MyCustomErrorName> {}
 
 await setupLogger("INFO");
 
@@ -20,19 +21,47 @@ log.critical("Hello world");
 async function testCustomError() {
   try {
     // Throw the custom error with a message
-    throw new MyCustomError(
-      "This is a custom error message",
-      new Error("Some cause"),
-    );
+    throw new MyCustomError({
+      name: "MyCustomError2",
+      message: "This is a custom error",
+    });
   } catch (error) {
-    // Check if the caught error is an instance of MyCustomError
-    if (error instanceof MyCustomError) {
-      log.error(`Caught a MyCustomError: ${error.message}`);
+    // Check if the caught error is a custom error
+    if (isCustomError(error)) {
+      // Use a switch statement to handle different custom error names
+      switch (error.name) {
+        case "MyCustomError1":
+          log.error("Caught a MyCustomError");
+          break;
+        case "MyCustomError2":
+          log.error("Caught a MyCustomError2");
+          break;
+        case "MyCustomError3":
+          log.error("Caught a MyCustomError3");
+          break;
+        default:
+          log.error("Caught a custom error");
+          break;
+      }
+
+      // Log the error message
+      log.error(`Error message: ${error.message}`);
+
+      // Check if the cause is available, then log it
+      if (error.cause !== undefined) {
+        log.error(`Error cause: ${error.cause}`);
+      }
+
+      // Check if the stack is available, then log it
+      if (error.stack !== undefined) {
+        log.error(`Error stack: ${error.stack}`);
+      }
+    } else {
+      // If the error is not a custom error, re-throw it
       log.error(`Error name: ${error.name}`);
+      log.error(`Error message: ${error.message}`);
       log.error(`Error cause: ${error.cause}`);
       log.error(`Error stack: ${error.stack}`);
-    } else {
-      // If the error is not an instance of MyCustomError, re-throw it
       throw error;
     }
   }

@@ -18,4 +18,9 @@ export type CustomError<T extends string, C = unknown> = {
    * Optional information about the cause of the error.
    */
   cause?: C;
+
+  /**
+   * The stack trace of the error.
+   */
+  stack?: string;
 };
