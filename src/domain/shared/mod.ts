@@ -1,1 +1,1 @@
-export type { Auditable } from "./typings.d.ts";
+export type { Auditable, NewAuditable } from "./typings.d.ts";
