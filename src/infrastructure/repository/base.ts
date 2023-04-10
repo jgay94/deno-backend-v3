@@ -2,7 +2,7 @@ import { Id, Storage } from "@infra/storage/mod.ts";
 import { Auditable, NewAuditable } from "@domain/shared/mod.ts";
 import { NotFoundError } from "@utils/errors/mod.ts";
 
-import { Repository } from "./typings.d.ts";
+import { Repository, BaseRepositoryDeps } from "./typings.d.ts";
 
 /**
  * BaseRepository is an abstract class that implements the Repository interface.
@@ -14,11 +14,18 @@ import { Repository } from "./typings.d.ts";
  * @implements {Repository<T>} - Implements the Repository interface for the specific item type.
  */
 export abstract class BaseRepository<T extends Auditable> implements Repository<T> {
+  protected storage: Storage<T>;
+  protected systemId: Id;
+
   /**
    * Constructs a new instance of the BaseRepository class.
-   * @param storage - The storage implementation to use for the CRUD operations.
+   * 
+   * @param deps - An object containing the dependencies for the BaseRepository.
    */
-  constructor(protected storage: Storage<T>, protected systemId: Id = "system") {}
+  constructor(deps: BaseRepositoryDeps<T>) {
+    this.storage = deps.storage;
+    this.systemId = deps.systemId ?? "system";
+  }
 
   public async getAll(): Promise<T[]> {
     const items = await this.storage.getAll();

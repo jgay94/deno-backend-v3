@@ -1,3 +1,3 @@
-export type { User } from "./typings.d.ts";
+export type { User, UserRepository } from "./typings.d.ts";
 
 export { UserEntity } from "./entity.ts";

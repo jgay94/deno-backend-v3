@@ -9,14 +9,15 @@ import { User, UserStatus } from "./typings.d.ts";
  */
 export class UserEntity implements User {
   public readonly id: Id;
-  public readonly createdAt: Date;
+  public readonly createdAt: string;
   public readonly createdBy: Id;
-  public readonly lastUpdatedAt?: Date;
+  public readonly lastUpdatedAt?: string;
   public readonly lastUpdatedBy?: Id;
   public readonly version: number;
 
   public firstName: string;
   public lastName: string;
+  public username: string;
   public email: string;
   public password: string;
   public status: UserStatus;
@@ -35,6 +36,7 @@ export class UserEntity implements User {
 
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    this.username = user.username;
     this.email = user.email;
     this.password = user.password;
     this.status = user.status;

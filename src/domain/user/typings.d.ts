@@ -1,4 +1,20 @@
 import { Auditable } from "@domain/shared/mod.ts";
+import { Repository } from "@infra/repository/mod.ts";
+
+/**
+ * UserRepository interface represents a repository implementation specifically for User objects.
+ * 
+ * @extends {Repository<User>} - Extends the Repository interface with the User type.
+ */
+export interface UserRepository extends Repository<User> {
+  /**
+   * Gets a user by their username.
+   *
+   * @param username - The username of the user to retrieve.
+   * @returns A promise that resolves to the user with the specified username.
+   */
+  getByUsername(username: string): Promise<User>;
+}
 
 /**
  * A User interface that extends the Auditable interface to include user-specific properties.
@@ -16,6 +32,11 @@ export interface User extends Auditable {
    * The last name of the user.
    */
   lastName: string;
+
+  /**
+   * The username of the user.
+   */
+  username: string;
 
   /**
    * The email address of the user.
