@@ -1,5 +1,11 @@
 import { BaseError } from "./base.ts";
 
+export class UpdateNotProvidedError extends BaseError<"UpdateNotProvidedError"> {
+  constructor(message: string, cause?: unknown) {
+    super({ name: "UpdateNotProvidedError", message, cause });
+  }
+}
+
 export class NotFoundError extends BaseError<"NotFoundError"> {
   constructor(message: string, cause?: unknown) {
     super({ name: "NotFoundError", message, cause });

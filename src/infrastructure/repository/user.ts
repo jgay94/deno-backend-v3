@@ -17,7 +17,7 @@ export class UserRepositoryImpl extends BaseRepository<User> implements UserRepo
    *
    * @param storage - The storage implementation to use for the CRUD operations.
    */
-  constructor(storage: Storage<User>) {
+  constructor(protected storage: Storage<User>) {
     super({ storage });
   }
 

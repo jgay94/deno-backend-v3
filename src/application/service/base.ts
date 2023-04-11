@@ -1,7 +1,7 @@
 import { Auditable, NewAuditable } from "@domain/shared/mod.ts";
 import { Repository } from "@infra/repository/mod.ts";
 import { Id } from "@infra/storage/mod.ts";
-import { NotFoundError } from "@utils/errors/mod.ts";
+import { NotFoundError, UpdateNotProvidedError } from "@utils/errors/mod.ts";
 
 import { BaseServiceDeps, Service } from "./typings.d.ts";
 
@@ -15,8 +15,8 @@ import { BaseServiceDeps, Service } from "./typings.d.ts";
  * @implements {Service<T>} - Implements the Service interface for the specific item type.
  */
 export abstract class BaseService<T extends Auditable> implements Service<T> {
-  protected repository: Repository<T>;
-  protected systemId: Id;
+  private repository: Repository<T>;
+  private systemId: Id;
 
   /**
    * Constructs a new instance of the BaseService class.
@@ -46,7 +46,7 @@ export abstract class BaseService<T extends Auditable> implements Service<T> {
 
   public async update(id: string, item: Partial<T>): Promise<T> {
     if (Object.keys(item).length === 0) {
-      throw new Error("No updates provided.");
+      throw new UpdateNotProvidedError("No updates provided.");
     }
 
     const updatedItem = await this.repository.update(id, item);

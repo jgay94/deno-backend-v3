@@ -7,5 +7,6 @@ export {
   AuthenticationError,
   DatabaseError,
   NotFoundError,
+  UpdateNotProvidedError,
   ValidationError,
 } from "./errors.ts";
