@@ -3,11 +3,11 @@
  * @template T - The string literal type representing the error name.
  * @template C - The type representing the error cause, defaults to unknown.
  */
-export type CustomError<T extends string, C = unknown> = {
+export type CustomError<TName extends string, UCause = unknown> = {
   /**
    * The name of the error.
    */
-  name: T;
+  name: TName;
 
   /**
    * A description of the error.
@@ -17,7 +17,7 @@ export type CustomError<T extends string, C = unknown> = {
   /**
    * Optional information about the cause of the error.
    */
-  cause?: C;
+  cause?: UCause;
 
   /**
    * The stack trace of the error.
